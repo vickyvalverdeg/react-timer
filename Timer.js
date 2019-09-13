@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import {
+  Colors,
+} from 'react-native/Libraries/NewAppScreen';
+import {
     StyleSheet,
-    Text
+    Text,
+    View,
+    Button
   } from 'react-native';
+const startTime = Date.now();
+let runTimer;
 
 export default class Timer extends Component {
     constructor(props) {
@@ -12,9 +19,10 @@ export default class Timer extends Component {
         seconds: 0,
         minutes: 0,
       }
-  
-      let startTime = Date.now();
-      setInterval(() => {
+    }
+
+    startTimer(){
+      runTimer = setInterval(() => {
         let timeDifference = Date.now() - startTime;
         let seconds = timeDifference / 1000;
         let minutes = seconds / 60;
@@ -27,21 +35,44 @@ export default class Timer extends Component {
         });
       }, 10);
     }
-  
+
+    stopTimer(){
+      setTimeout(() => { clearInterval(runTimer); }, 0);
+    }
+
     render() {
       let { milliseconds, seconds, minutes } = this.state;
-      let time = `${minutes}:${seconds}:${milliseconds}`;
+      let time = `${minutes.toFixed(1)}:${seconds.toFixed(2)}:${milliseconds.toFixed(2)}`;
       return (
-        <Text>{time}</Text>
+        <View style={styles.container}>
+        <Button
+          title="Start me"
+          onPress={
+            () => this.startTimer()
+          }
+        />
+        <Text style={styles.textTimer}>{time}</Text>
+        <Button
+          title="Stop me"
+          onPress={
+            () => this.stopTimer()
+          }
+        />
+        </View>
       )
     }
   }
-  
+
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#F5FCFF',
-    }
+      marginTop: 150,
+    },
+    textTimer: {
+      textAlign: 'center',
+      marginTop: 15,
+      marginBottom: 15,
+      fontSize: 18,
+      fontWeight: '400',
+      color: Colors.dark,
+    },
   });
