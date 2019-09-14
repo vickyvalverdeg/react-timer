@@ -24,10 +24,10 @@ export default class Timer extends Component {
     startTimer(){
       runTimer = setInterval(() => {
         let timeDifference = Date.now() - startTime;
-        let seconds = timeDifference / 1000;
-        let minutes = seconds / 60;
-        let leftoverSeconds = seconds % 60;
-        let leftoverMillis = timeDifference % 1000 / 10;
+        let seconds = timeDifference / 1000
+        let minutes = seconds / 60
+        let leftoverSeconds = seconds % 60
+        let leftoverMillis = timeDifference % 1000 / 10
         this.setState({
           milliseconds: leftoverMillis,
           seconds: leftoverSeconds,
@@ -43,21 +43,10 @@ export default class Timer extends Component {
     render() {
       let { milliseconds, seconds, minutes } = this.state;
       let time = `${minutes.toFixed(1)}:${seconds.toFixed(2)}:${milliseconds.toFixed(2)}`;
+      this.startTimer();
       return (
         <View style={styles.container}>
-        <Button
-          title="Start me"
-          onPress={
-            () => this.startTimer()
-          }
-        />
-        <Text style={styles.textTimer}>{time}</Text>
-        <Button
-          title="Stop me"
-          onPress={
-            () => this.stopTimer()
-          }
-        />
+          <Text style={styles.textTimer}>{time}</Text>
         </View>
       )
     }
